@@ -1,0 +1,92 @@
+apply_ipca: false
+criterions:
+  PerformanceLoss:
+    def_file: ./loss/PriorCELoss.py
+    loss_params:
+      img_max: 500
+      num_classes: 100
+      prior: 0.01
+    optim_params: null
+    weight: 1.0
+  RouteWeightLoss:
+    def_file: ./loss/LADELoss.py
+    loss_params:
+      img_max: 500
+      num_classes: 100
+      prior: 0.01
+      remine_lambda: 0.01
+    optim_params: null
+    weight: 0.1
+last: false
+model_dir: null
+networks:
+  classifier:
+    def_file: ./models/DotProductClassifier.py
+    optim_params:
+      lr: 0.2
+      momentum: 0.9
+      threshold_momentum: 0.0
+      weight_decay: 0.0005
+    params:
+      dataset: CIFAR100_LT
+      feat_dim: 128
+      num_classes: 100
+      test: false
+      use_route: true
+    scheduler_params:
+      coslr: false
+      endlr: 0.0
+      gamma: 0.1
+      lr_factor: 0.01
+      lr_step:
+      - 120
+      - 160
+      step_size: 30
+      warm_epoch: 5
+      warmup: true
+  feat_model:
+    def_file: ./models/ResNet32Feature.py
+    fix: false
+    optim_params:
+      lr: 0.2
+      momentum: 0.9
+      weight_decay: 0.0005
+    params:
+      dataset: CIFAR100_LT
+      dropout: null
+      pretrain: false
+      stage1_weights: false
+      test: false
+      use_fc: false
+    scheduler_params:
+      coslr: false
+      endlr: 0.0
+      gamma: 0.1
+      lr_factor: 0.01
+      lr_step:
+      - 120
+      - 160
+      step_size: 30
+      warm_epoch: 5
+      warmup: true
+num_components: 512
+shuffle: false
+training_opt:
+  backbone: resnet32
+  batch_size: 256
+  cifar_imb_ratio: 0.01
+  dataset: CIFAR100_LT
+  display_grad: false
+  display_grad_step: 10
+  display_step: 10
+  exp_name: test
+  feature_dim: 128
+  log_dir: ./exp_results/lade2021/cifar100_imb0.01_lade
+  num_classes: 100
+  num_epochs: 200
+  num_workers: 12
+  open_threshold: 0.1
+  sampler: null
+  sub_dir: models
+  work_dir: ./exp_results
+tuning_memory: false
