@@ -1,9 +1,8 @@
-# Environment Requirements
-python >= 3.8
+# Lt Survey: TLC
 
-CUDA >= 10.2
+TLC: Trustworthy Long-Tailed Classification. (CVPR 2022)
 
-pytorch >= 1.8
+[paper](https://arxiv.org/abs/2111.09030)
 
-# Run
+## Usage
 python main.py -c "configs/cifar100_lt.json"
